@@ -7,16 +7,22 @@ public class NBody {
 		return r;
 	}
 
+	public static int readPlanetNum(String fileName) {
+		In file = new In(fileName);
+		int N = file.readInt();
+		return N;
+	}
+
 	/**Read and return array of Planets*/
 	public static Planet[] readPlanets(String fileName) {
 		In file = new In(fileName);
-		file.readInt();
+		int N = file.readInt();
 		file.readDouble();
 
 		Planet[] planets = new Planet[5];
 		int row = 0;
 
-		while (row < 5) {
+		while (row < N) {
 			double xP = file.readDouble();
 			double yP = file.readDouble();
 
@@ -41,6 +47,7 @@ public class NBody {
 
 		// set the scale to match the radius of universe
 		double r = NBody.readRadius(filename);
+		int N = NBody.readPlanetNum(filename);
 		StdDraw.setScale(-r, r);
 
 		//set image as background
@@ -56,10 +63,10 @@ public class NBody {
 
 		double time = 0;
 		while (time < T) {
-			double[] xForces = new double[5];
-			double[] yForces = new double[5];
+			double[] xForces = new double[N];
+			double[] yForces = new double[N];
 			int row = 0;
-			while (row < 5) {
+			while (row < N) {
 				double sumNetX = 0;
 				double sumNetY = 0;
 				sumNetX += planets[row].calcNetForceExertedByX(planets);
@@ -71,7 +78,7 @@ public class NBody {
 				
 			}
 
-			for (int num = 0; num < 5; num++) {
+			for (int num = 0; num < N; num++) {
 				planets[num].update(dt, xForces[num], yForces[num]);
 			}
 			//Draw the background image
