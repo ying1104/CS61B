@@ -7,11 +7,6 @@ public class NBody {
 		return r;
 	}
 
-	public static int readPlanetNum(String fileName) {
-		In file = new In(fileName);
-		int N = file.readInt();
-		return N;
-	}
 
 	/**Read and return array of Planets*/
 	public static Planet[] readPlanets(String fileName) {
@@ -19,7 +14,7 @@ public class NBody {
 		int N = file.readInt();
 		file.readDouble();
 
-		Planet[] planets = new Planet[5];
+		Planet[] planets = new Planet[N];
 		int row = 0;
 
 		while (row < N) {
@@ -47,7 +42,8 @@ public class NBody {
 
 		// set the scale to match the radius of universe
 		double r = NBody.readRadius(filename);
-		int N = NBody.readPlanetNum(filename);
+		In file = new In(fileName);
+		int N = file.readInt();
 		StdDraw.setScale(-r, r);
 
 		//set image as background
