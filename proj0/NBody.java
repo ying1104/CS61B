@@ -42,7 +42,7 @@ public class NBody {
 
 		// set the scale to match the radius of universe
 		double r = NBody.readRadius(filename);
-		In file = new In(fileName);
+		In file = new In(filename);
 		int N = file.readInt();
 		StdDraw.setScale(-r, r);
 
