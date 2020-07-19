@@ -10,18 +10,18 @@
 public class ArrayDeque<T> {
     /** the item. */
     private T[] items;
-    /** the nextFirst. */
-    private int nextFirst;
-    /** the nextLast. */
-    private int nextLast;
+    /** the First. */
+    private int first;
+    /** the Last. */
+    private int last;
     /** the size. */
     private int size;
 
     /** Creates an empty array. */
     public ArrayDeque() {
         items = (T[]) new Object[8];
-        nextFirst = 4;
-        nextLast = 5;
+        first = 5;
+        last = 4;
         size = 0;
     }
 
@@ -30,9 +30,18 @@ public class ArrayDeque<T> {
      */
     private void resize(int cap) {
         T[] a = (T[]) new Object[cap];
-        System.arraycopy(items, 0, a, 0, nextLast);
-        System.arraycopy(items, nextLast, a, cap - size + nextLast,
-                size - nextLast);
+        if (cap > size) {
+            System.arraycopy(items, 0, a, 0, last + 1);
+            System.arraycopy(items, first, a, cap - size + first,
+                    size - first);
+            first = cap - size + first;
+        } else {
+            System.arraycopy(items, 0, a, 0, last + 1);
+            System.arraycopy(items, first, a,
+                    cap - size + first,
+                    items.length - first);
+        }
+
         items = a;
     }
 
@@ -40,33 +49,44 @@ public class ArrayDeque<T> {
     private void resizeOrNot() {
         if (size == items.length) {
             resize(size * 2);
-            nextFirst += size;
         } else if (items.length >= 16 && size < 0.25 * items.length) {
             resize(size / 2);
         }
     }
 
-    /** Finds the next index for nextLast and nextFirst. */
-    private void nextIndex() {
-        if (nextLast == items.length) {
-            nextLast = 0;
+    /** Finds the next index for last and first.
+     *
+     * @param a the current first or last
+     * @param lOrF 1 for first, 0 for last
+     * @return the next first or last.
+     */
+    private int nextIndex(int a, int lOrF) {
+        /** lorF == 1 means it's finding next first. */
+        if (lOrF == 1) {
+            if (a == 0) {
+                return items.length - 1;
+            }
+            return a - 1;
         }
-        if (nextFirst == -1) {
-            nextFirst = items.length - 1;
+        /** loF == 0 means it's finding the next last. */
+        if (lOrF == 0) {
+            if (a == items.length - 1) {
+                return 0;
+            }
+            return a + 1;
         }
+        return -1;
     }
 
     /** Adds an item of type T to the front of the deque.
-     *
      * @param item the item to add
      */
     public void addFirst(T item) {
         resizeOrNot();
 
-        nextIndex();
+        first = nextIndex(first, 1);
 
-        items[nextFirst] = item;
-        nextFirst--;
+        items[first] = item;
         size++;
     }
 
@@ -78,10 +98,9 @@ public class ArrayDeque<T> {
     public void addLast(T item) {
         resizeOrNot();
 
-        nextIndex();
+        last = nextIndex(last, 0);
 
-        items[nextLast] = item;
-        nextLast++;
+        items[last] = item;
         size++;
 
     }
@@ -101,19 +120,11 @@ public class ArrayDeque<T> {
      * to last, separated by a space.
      */
     public void printDeque() {
-        int f1 = nextFirst;
-        int l1;
-        if (nextLast == 0) {
-            l1 = items.length - 1;
-        } else {
-            l1 = nextLast;
-        }
-        while (f1 != l1 - 1) {
-            f1++;
-            if (f1 == items.length) {
-                f1 = 0;
-            }
+        int f1 = first;
+        int l1 = last;
+        while (nextIndex(f1, 1) != l1) {
             System.out.print(items[f1] + " ");
+            f1 = nextIndex(f1, 0);
         }
 
 
@@ -126,12 +137,11 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-
-        nextIndex();
+        int p = first;
+        first = nextIndex(first, 0);
 
         size--;
-        nextFirst++;
-        return items[nextFirst];
+        return items[p];
 
     }
 
@@ -143,11 +153,11 @@ public class ArrayDeque<T> {
             return null;
         }
 
-        nextIndex();
+        int p = last;
+        last = nextIndex(last, 1);
 
         size--;
-        nextLast--;
-        return items[nextLast];
+        return items[p];
 
     }
 
@@ -158,19 +168,21 @@ public class ArrayDeque<T> {
      * @param index the index where to get the item
      */
     public T get(int index) {
-        int f1 = nextFirst;
-        int i = -1;
-        while (i != index) {
-            f1++;
-            i++;
-            if (f1 == items.length) {
-                f1 = 0;
-            }
-            if (f1 == nextLast) {
-                return null;
+        int f1 = first;
+        int l1 = last;
+        if (size == 1) {
+            return items[f1];
+        }
+        int i = 0;
+        while (nextIndex(f1, 1) != l1) {
+            if (i == index) {
+                return items[f1];
+            } else {
+                i++;
+                f1 = nextIndex(f1, 0);
             }
         }
-        return items[f1];
+        return null;
 
 
     }
