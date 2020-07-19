@@ -141,6 +141,7 @@ public class ArrayDeque<T> {
         first = nextIndex(first, 0);
 
         size--;
+        resizeOrNot();
         return items[p];
 
     }
@@ -157,6 +158,7 @@ public class ArrayDeque<T> {
         last = nextIndex(last, 1);
 
         size--;
+        resizeOrNot();
         return items[p];
 
     }
