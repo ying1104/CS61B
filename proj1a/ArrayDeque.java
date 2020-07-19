@@ -30,27 +30,23 @@ public class ArrayDeque<T> {
      */
     private void resize(int cap) {
         T[] a = (T[]) new Object[cap];
-        if (cap > size) {
-            System.arraycopy(items, 0, a, 0, last + 1);
-            System.arraycopy(items, first, a, cap - size + first,
-                    size - first);
-            first = cap - size + first;
-        } else {
-            System.arraycopy(items, 0, a, 0, last + 1);
-            System.arraycopy(items, first, a,
-                    cap - size + first,
-                    items.length - first);
+        int i = 0;
+        while (i != size) {
+            a[i] = items[first];
+            first = nextIndex(first, 0);
+            i++;
         }
-
+        first = 0;
+        last = i - 1;
         items = a;
     }
 
     /** Makes the decision if to resize the array. */
     private void resizeOrNot() {
         if (size == items.length) {
-            resize(size * 2);
+            resize(items.length * 2);
         } else if (items.length >= 16 && size < 0.25 * items.length) {
-            resize(size / 2);
+            resize(items.length / 2);
         }
     }
 
@@ -61,14 +57,12 @@ public class ArrayDeque<T> {
      * @return the next first or last.
      */
     private int nextIndex(int a, int lOrF) {
-        /** lorF == 1 means it's finding next first. */
         if (lOrF == 1) {
             if (a == 0) {
                 return items.length - 1;
             }
             return a - 1;
         }
-        /** loF == 0 means it's finding the next last. */
         if (lOrF == 0) {
             if (a == items.length - 1) {
                 return 0;
@@ -176,7 +170,7 @@ public class ArrayDeque<T> {
             return items[f1];
         }
         int i = 0;
-        while (nextIndex(f1, 1) != l1) {
+        while (f1 != l1) {
             if (i == index) {
                 return items[f1];
             } else {

@@ -95,8 +95,7 @@ public class ArrayDequeTest {
 
         ad2.addLast(1);
         ad2.addLast(2);
-        ad2.addLast(3);
-        ad2.addLast(4);
+
         ad2.addLast(5);
         System.out.println("size 1 is: " + ad2.size());
         ad2.addLast(6);
@@ -128,9 +127,31 @@ public class ArrayDequeTest {
 
     }
 
+    /** d011) AD-basic: get. (0.0/1.176)。*/
+    public static void get1() {
+        ArrayDeque<Integer> ad1 = new ArrayDeque<Integer>();
+        ad1.addLast(0);
+        ad1.addFirst(1);
+        ad1.addLast(2);
+        ad1.addFirst(3);
+        ad1.addLast(4);
+        ad1.addLast(5);
+        ad1.addLast(6);
+        System.out.println("the 3rd item is: " + ad1.get(3));
+        ad1.addLast(8);
+        ad1.addFirst(9);
+        ad1.removeFirst();
+        ad1.removeLast();
+        ad1.removeFirst();
+        ad1.removeLast();
+        ad1.removeFirst();
+        ad1.removeLast();
+        System.out.println("the 0th item is: " + ad1.get(0));
+    }
+
     public static void main(String[] args) {
         System.out.println("Running tests.\n");
-        addIsEmptySizeTest();
-        getTest();
+
+        get1();
     }
 }
