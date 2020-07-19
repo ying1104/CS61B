@@ -170,7 +170,7 @@ public class ArrayDeque<T> {
             return items[f1];
         }
         int i = 0;
-        while (f1 != l1) {
+        while (nextIndex(f1, 1) != l1) {
             if (i == index) {
                 return items[f1];
             } else {
