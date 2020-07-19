@@ -1,7 +1,20 @@
+/**
+ * The program is an implementation of linked list.
+ *
+ * @author Ying
+ * @version 1.0
+ * @since 2020-7-18
+ * @param <T> generic type
+ */
+
 public class ArrayDeque<T> {
+    /** the item. */
     private T[] items;
+    /** the nextFirst. */
     private int nextFirst;
+    /** the nextLast. */
     private int nextLast;
+    /** the size. */
     private int size;
 
     /** Creates an empty array. */
@@ -12,11 +25,14 @@ public class ArrayDeque<T> {
         size = 0;
     }
 
-    /** Changes the size of array. */
+    /** Changes the size of array.
+     * @param cap the size of the new array
+     */
     private void resize(int cap) {
         T[] a = (T[]) new Object[cap];
         System.arraycopy(items, 0, a, 0, nextLast);
-        System.arraycopy(items, nextLast, a, cap - size + nextLast, size - nextLast);
+        System.arraycopy(items, nextLast, a, cap - size + nextLast,
+                size - nextLast);
         items = a;
     }
 
@@ -24,7 +40,6 @@ public class ArrayDeque<T> {
     private void resizeOrNot() {
         if (size == items.length) {
             resize(size * 2);
-            // renumber nextFirst and nextLast.
             nextFirst += size;
         } else if (items.length >= 16 && size < 0.25 * items.length) {
             resize(size / 2);
@@ -32,7 +47,7 @@ public class ArrayDeque<T> {
     }
 
     /** Finds the next index for nextLast and nextFirst. */
-    public void nextIndex(){
+    private void nextIndex() {
         if (nextLast == items.length) {
             nextLast = 0;
         }
@@ -41,7 +56,10 @@ public class ArrayDeque<T> {
         }
     }
 
-    /** Adds an item of type T to the front of the deque. */
+    /** Adds an item of type T to the front of the deque.
+     *
+     * @param item the item to add
+     */
     public void addFirst(T item) {
         resizeOrNot();
 
@@ -53,7 +71,10 @@ public class ArrayDeque<T> {
     }
 
 
-    /** Adds an item of type T to the back of the deque. */
+    /** Adds an item of type T to the back of the deque.
+     *
+     * @param item the item to add
+     */
     public void addLast(T item) {
         resizeOrNot();
 
@@ -134,6 +155,7 @@ public class ArrayDeque<T> {
      *  where 0 is the front, 1 is the next item, and so forth.
      * If no such item exists, returns null.
      * Must not alter the deque!
+     * @param index the index where to get the item
      */
     public T get(int index) {
         int f1 = nextFirst;

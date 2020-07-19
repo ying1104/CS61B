@@ -117,10 +117,21 @@ public class LinkedListDequeTest {
 
 	}
 
+	public static void scoreTest() {
+		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+		lld1.addLast(0);
+		lld1.addLast(1);
+		lld1.removeFirst();
+		System.out.println(lld1.size());
+		System.out.print(lld1.removeLast());
+
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
 		// addIsEmptySizeTest();
 		// addRemoveTest();
 		getTest();
+		scoreTest();
 	}
 } 
