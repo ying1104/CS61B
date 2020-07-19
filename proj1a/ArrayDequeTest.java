@@ -151,20 +151,17 @@ public class ArrayDequeTest {
     /** d00001) AD-basic: Test add and get. (0.0/1.176). */
     public static void get2() {
         ArrayDeque<Integer> ad1 = new ArrayDeque<Integer>();
-        ad1.addLast(0);
-        ad1.addLast(1);
-        ad1.addLast(2);
-        ad1.addLast(3);
-        ad1.addLast(4);
-        ad1.addLast(5);
-        ad1.addLast(6);
-        System.out.println("the 7th item is: " + ad1.get(6));
+        for (int i = 0; i < 32; i++) {
+            ad1.addLast(i);
+        }
+        System.out.println("the 0th item is: " + ad1.get(0));
+        System.out.println("the 6th item is: " + ad1.get(7));
     }
 
 
     public static void main(String[] args) {
         System.out.println("Running tests.\n");
 
-        get2();
+        get1();
     }
 }

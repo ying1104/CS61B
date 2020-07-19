@@ -131,12 +131,12 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        int p = first;
+        T result = items[first];
         first = nextIndex(first, 0);
 
         size--;
         resizeOrNot();
-        return items[p];
+        return result;
 
     }
 
@@ -148,12 +148,12 @@ public class ArrayDeque<T> {
             return null;
         }
 
-        int p = last;
+        T result = items[last];
         last = nextIndex(last, 1);
 
         size--;
         resizeOrNot();
-        return items[p];
+        return result;
 
     }
 
@@ -164,21 +164,14 @@ public class ArrayDeque<T> {
      * @param index the index where to get the item
      */
     public T get(int index) {
+        if (index > size - 1) {
+            return null;
+        }
         int f1 = first;
-        int l1 = last;
-        if (size == 1) {
-            return items[f1];
+        for (int i = 0; i < index; i++) {
+            f1 = nextIndex(f1, 0);
         }
-        int i = 0;
-        while (nextIndex(f1, 1) != l1) {
-            if (i == index) {
-                return items[f1];
-            } else {
-                i++;
-                f1 = nextIndex(f1, 0);
-            }
-        }
-        return null;
+        return items[f1];
 
 
     }
