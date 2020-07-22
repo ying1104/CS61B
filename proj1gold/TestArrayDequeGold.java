@@ -8,14 +8,16 @@ public class TestArrayDequeGold {
     public void testToPrint(StudentArrayDeque<Integer> sad1,
                             ArrayDequeSolution<Integer> happy1,
                             String toPrint) {
+
+
         Integer expected = happy1.size();
         Integer actual = sad1.size();
-        assertEquals(toPrint + "size()\n", expected, actual);
+        assertEquals(toPrint, expected, actual);
 
         for (int i = 0; i < happy1.size(); i++) {
             Integer expected1 = happy1.get(i);
             Integer actual1 = sad1.get(i);
-            assertEquals(toPrint + "get()\n", expected1, actual1);
+            assertEquals(toPrint, expected1, actual1);
         }
 
 
@@ -31,12 +33,12 @@ public class TestArrayDequeGold {
         for (int i = 0; i < 500; i += 1) {
             double numberBetweenZeroAndOne = StdRandom.uniform();
 
-            if (numberBetweenZeroAndOne < 0.25) {
+            if (numberBetweenZeroAndOne < 0.25 || happy1.size() == 0) {
                 toPrint += "addLast(" + i + ")\n";
                 sad1.addLast(i);
                 happy1.addLast(i);
                 testToPrint(sad1, happy1, toPrint);
-            } else if (numberBetweenZeroAndOne < 0.5) {
+            } else if (numberBetweenZeroAndOne < 0.5 || happy1.size() == 0) {
                 toPrint += "addFirst(" + i + ")\n";
                 sad1.addFirst(i);
                 happy1.addFirst(i);
@@ -59,8 +61,7 @@ public class TestArrayDequeGold {
                 testToPrint(sad1, happy1, toPrint);
             }
         }
-        sad1.printDeque();
-        happy1.printDeque();
+
 
     }
 
