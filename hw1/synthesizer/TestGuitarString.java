@@ -44,6 +44,12 @@ public class TestGuitarString {
         s.tic();
 
         double s5 = s.sample();
+        s.tic();
+        double s6 = s.sample();
+        s.tic();
+        double s7 = s.sample();
+        s.tic();
+        System.out.println(s1 + " " + s2 + " " + s3+ " " + s4+ " " + s5+ " " + s6+ " " + s7 );
         double expected = 0.996 * 0.5 * (s1 + s2);
 
         // Check that new sample is correct, using tolerance of 0.001.

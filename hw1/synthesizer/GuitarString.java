@@ -16,16 +16,22 @@ public class GuitarString {
     public GuitarString(double frequency) {
         int cap = (int) Math.round(SR / frequency);
         buffer = new ArrayRingBuffer<>(cap);
+        while (!buffer.isFull()) {
+            buffer.enqueue(0.0);
+        }
     }
 
 
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
+        while(!buffer.isEmpty()) {
+            buffer.dequeue();
+        }
         while (!buffer.isFull()) {
             double r = Math.random() - 0.5;
 
             Iterator<Double> theBuffer = buffer.iterator();
-            while(theBuffer.hasNext()) {
+            while (theBuffer.hasNext()) {
                 if (theBuffer.next() == r) {
                     continue;
                 }
@@ -33,7 +39,7 @@ public class GuitarString {
             buffer.enqueue(r);
         }
 
-        //       Make sure that your random numbers are different from each other.
+
     }
 
     /* Advance the simulation one time step by performing one iteration of

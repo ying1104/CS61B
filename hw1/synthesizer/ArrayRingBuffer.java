@@ -55,17 +55,6 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T>  {
 
     }
 
-    /** Implements fillCount from the interface. */
-    @Override
-    public int fillCount() {
-        return fillCount;
-    }
-
-    /** Implements capacity from the interface. */
-    @Override
-    public int capacity() {
-        return capacity;
-    }
 
     /**
      * Adds x to the end of the ring buffer. If there is no room, then
@@ -114,7 +103,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T>  {
             throw new RuntimeException("Ring buffer underflow");
         }
         return rb[first];
-        }
+    }
 
 
 }

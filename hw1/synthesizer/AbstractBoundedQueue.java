@@ -1,13 +1,21 @@
 package synthesizer;
 
+/** the AbstractBoundedQueue class.
+ * @param <T> generic type
+ * @author Ying
+ */
 public abstract class AbstractBoundedQueue<T> implements BoundedQueue<T> {
 
     protected int fillCount;
     protected int capacity;
 
-    public abstract T peek();
+    @Override
+    public int capacity() {
+        return capacity;
+    }
 
-    public abstract T dequeue();
-
-    public abstract void enqueue(T x);
+    @Override
+    public int fillCount() {
+        return fillCount;
+    }
 }
