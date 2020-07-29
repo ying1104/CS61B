@@ -7,6 +7,7 @@ import byog.TileEngine.Tileset;
 import java.awt.*;
 import java.util.Random;
 import java.util.Vector;
+import edu.princeton.cs.introcs.StdDraw;
 
 public class Game {
     TERenderer ter = new TERenderer();
@@ -45,7 +46,7 @@ public class Game {
         RANDOM = new Random(Long.parseLong(input));
 
         /** Initialize TERenderer */
-        ter.initialize(WIDTH, HEIGHT);
+//        ter.initialize(WIDTH, HEIGHT);
         fillWithNothing();
 
         /** Actually create my leafs and add root leaf to it. */
@@ -64,7 +65,7 @@ public class Game {
 
 
         /** draws the world to the screen. */
-        ter.renderFrame(finalWorldFrame);
+//        ter.renderFrame(finalWorldFrame);
         return finalWorldFrame;
     }
 
