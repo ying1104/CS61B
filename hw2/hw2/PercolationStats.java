@@ -4,13 +4,16 @@ import edu.princeton.cs.introcs.StdRandom;
 import edu.princeton.cs.introcs.StdStats;
 
 public class PercolationStats {
-    private int[] testResult;
+    private double[] testResult;
     private int testTime;
 
     /** Performs T independent experiments on an N-by-N grid.*/
-    public PercolationStats(int N, int T, PercolationFactory pf) throws IllegalArgumentException {
+    public PercolationStats(int N, int T, PercolationFactory pf) {
+        if (N <= 0 || T <= 0) {
+            throw new IllegalArgumentException();
+        }
 
-        testResult = new int[T];
+        testResult = new double[T];
         testTime = T;
         for (int testNum = 0; testNum < T; testNum++) {
             Percolation test = pf.make(N);
@@ -19,7 +22,7 @@ public class PercolationStats {
                 int col = StdRandom.uniform(N);
                 test.open(row, col);
             }
-            testResult[testNum] = test.numberOfOpenSites() / (N * N);
+            testResult[testNum] = (double) test.numberOfOpenSites() / (double) (N * N);
         }
     }
 
@@ -43,5 +46,10 @@ public class PercolationStats {
         return mean() + 1.96 * stddev() / Math.sqrt(testTime);
     }
 
+    public static void main(String[] args) {
 
+        PercolationFactory pf = new PercolationFactory();
+        PercolationStats test = new PercolationStats(2, 10000, pf);
+        System.out.println(test.mean());
+    }
 }

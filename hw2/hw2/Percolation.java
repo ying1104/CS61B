@@ -10,7 +10,7 @@ public class Percolation {
     private WeightedQuickUnionUF checkFull;
 
     /** Creates N-by-N grid, with all sites initially blocked. */
-    public Percolation(int N){
+    public Percolation(int N) {
         if (N <= 0) {
             throw new IllegalArgumentException();
         }
