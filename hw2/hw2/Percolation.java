@@ -10,7 +10,10 @@ public class Percolation {
     private WeightedQuickUnionUF checkFull;
 
     /** Creates N-by-N grid, with all sites initially blocked. */
-    public Percolation(int N) throws IllegalArgumentException {
+    public Percolation(int N){
+        if (N <= 0) {
+            throw new IllegalArgumentException();
+        }
         numOfOpenSites = 0;
         grid = new int[N][N];
         gridSize = N;
@@ -76,7 +79,7 @@ public class Percolation {
 
     /** Use for unit testing (not required). */
     public static void main(String[] args) {
-        Percolation testPerco = new Percolation(10);
+        Percolation testPerco = new Percolation(-10);
         System.out.println(testPerco.grid[5][5]);
     }
 
