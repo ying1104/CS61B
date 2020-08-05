@@ -31,7 +31,7 @@ public class PercolationStats {
         return StdStats.mean(testResult);
     }
 
-    /** sample standard deviation of percolation threshold. */
+    /** Sample standard deviation of percolation threshold. */
     public double stddev() {
         return StdStats.stddev(testResult);
     }
@@ -49,7 +49,7 @@ public class PercolationStats {
     public static void main(String[] args) {
 
         PercolationFactory pf = new PercolationFactory();
-        PercolationStats test = new PercolationStats(2, 10000, pf);
+        PercolationStats test = new PercolationStats(20, 10000, pf);
         System.out.println(test.mean());
     }
 }
