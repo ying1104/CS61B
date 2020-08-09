@@ -11,8 +11,14 @@ public class ComplexOomage implements Oomage {
 
     @Override
     public int hashCode() {
-        int total = params.hashCode();
+        int total = 0;
+        for (int x : params) {
+            total = total * 256;
+            total = total + x;
+        }
         return total;
+        // return param.hashCode() will pass the test.
+
     }
 
     @Override
