@@ -1,7 +1,9 @@
 package lab9;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * Implementation of interface Map61B with BST as core data structure.
@@ -111,7 +113,12 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     /* Returns a Set view of the keys contained in this map. */
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException();
+        HashSet<K> keySet = new HashSet<>();
+        Iterator<K> k = this.iterator();
+        while (k.hasNext()) {
+            keySet.add(k.next());
+        }
+        return keySet;
     }
 
     /** Removes KEY from the tree if present
@@ -122,6 +129,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     public V remove(K key) {
         throw new UnsupportedOperationException();
     }
+
+
 
     /** Removes the key-value entry for the specified key only if it is
      *  currently mapped to the specified value.  Returns the VALUE removed,
@@ -134,6 +143,33 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public Iterator<K> iterator() {
-        throw new UnsupportedOperationException();
+        return new BSTMapIterator();
+    }
+
+    public class BSTMapIterator implements Iterator<K> {
+        private Stack<Node> theKeySet = new Stack<>();
+
+        private void addLeft(Node x) {
+            while (x != null) {
+                theKeySet.push(x);
+                x = x.left;
+            }
+        }
+
+        public BSTMapIterator() {
+            addLeft(root);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !theKeySet.isEmpty();
+        }
+
+        @Override
+        public K next() {
+            Node x = theKeySet.pop();
+            addLeft(x.right);
+            return x.key;
+        }
     }
 }
