@@ -116,24 +116,18 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     private void sink(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
-        while ((min(index, leftIndex(index)) == leftIndex(index)
-                || min(index, rightIndex(index)) == rightIndex(index))
-                && (getNode(rightIndex(index)) != null &&
-                getNode(leftIndex(index)) != null)) {
-            if (getNode(leftIndex(index)) == null
-                    && rightIndex(index) <= size) {
-                swap(index, rightIndex(index));
-                index = rightIndex(index);
-            } else if (getNode(rightIndex(index)) == null
-                    && leftIndex(index) <= size) {
-                swap(index, leftIndex(index));
-                index = leftIndex(index);
-            } else {
-                int toSwap = min(rightIndex(index), leftIndex(index));
-                swap(index, toSwap);
-                index = toSwap;
+        while (leftIndex(index) <= size) {
+            int j = leftIndex(index);
+            if (j < size && min(j, j + 1) == j + 1) {
+                j++;
             }
+            if (min(index, j) == index) {
+                break;
+            }
+            swap(index, j);
+            index = j;
         }
+
 
 
         return;
@@ -176,6 +170,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     public T removeMin() {
         T result = getNode(1).myItem;
         swap(1, size);
+        contents[size] = null;
         size--;
         sink(1);
 
