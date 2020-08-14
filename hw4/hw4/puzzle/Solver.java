@@ -1,0 +1,101 @@
+package hw4.puzzle;
+
+import edu.princeton.cs.algs4.*;
+
+
+
+
+public class Solver {
+    public MinPQ<SearchNode> pqOfNodes = new MinPQ<>();
+    public Stack<WorldState> solution;
+    public int totalInsert;
+
+    public class SearchNode implements Comparable<SearchNode> {
+        public WorldState worldState;
+        public int movesMade;
+        public SearchNode preNode;
+        public int estimateMoveToGoal;
+
+        public SearchNode(WorldState w, int m, SearchNode s) {
+            worldState = w;
+            movesMade = m;
+            preNode = s;
+            estimateMoveToGoal = w.estimatedDistanceToGoal();
+
+        }
+
+        @Override
+        public int compareTo(SearchNode o) {
+            int thisEstimate = this.estimateMoveToGoal;
+            int oEstimate = o.estimateMoveToGoal;
+            int thisTotal = thisEstimate + this.movesMade;
+            int oTotal = oEstimate + o.movesMade;
+            return thisTotal - oTotal;
+        }
+    }
+
+    /** Constructor which solves the puzzle, computing
+     * everything necessary for moves() and solution() to
+     * not have to solve the problem again. Solves the
+     * puzzle using the A* algorithm. Assumes a solution exists.
+     */
+    public Solver(WorldState initial) {
+        pqOfNodes.insert(new SearchNode(initial, 0, null));
+        totalInsert = 0;
+    }
+
+    /** Returns the minimum number of moves to solve the
+     * puzzle starting at the initial WorldState.
+     */
+    public int moves() {
+        Stack<WorldState> n = (Stack<WorldState>) this.solution();
+        return n.size() - 1;
+
+    }
+
+    /** Returns a sequence of WorldStates from the initial
+     *  WorldState to the solution.
+     */
+    public Iterable<WorldState> solution() {
+        solution = new Stack<>();
+        SearchNode current = pqOfNodes.min();
+        pqOfNodes.delMin();
+        while (!current.worldState.isGoal()) {
+            for (WorldState w : current.worldState.neighbors()) {
+                boolean repeat = false;
+                SearchNode toInsert = new SearchNode(w, current.movesMade + 1, current);
+//                for (WorldState v : solution) {
+//                    if (w.equals(v)) {
+//                        repeat = true;
+//                    }
+//                }
+                if (toInsert.preNode.preNode != null
+                && toInsert.preNode.preNode.worldState.equals(toInsert.worldState)) {
+                    repeat = true;
+                }
+                if (repeat) continue;
+                pqOfNodes.insert(toInsert);
+                totalInsert++;
+            }
+
+//            for (SearchNode s : pqOfNodes) {
+//                System.out.println(s.worldState);
+//                System.out.println("estimate to goal: " + s.worldState.estimatedDistanceToGoal() + "moveMade: " + s.movesMade);
+//            }
+//            System.out.println("Current: " + current.worldState);
+//            System.out.println();
+//
+//            System.out.println();
+            current = pqOfNodes.min();
+            pqOfNodes.delMin();
+        }
+        while (current != null) {
+            solution.push(current.worldState);
+            current = current.preNode;
+        }
+        return solution;
+    }
+
+
+
+}

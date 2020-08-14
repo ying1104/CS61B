@@ -3,7 +3,7 @@ package hw4.puzzle;
 public class Board {
 
     /** Returns the string representation of the board. 
-      * Uncomment this method. */
+     * Uncomment this method. */
     /*public String toString() {
         StringBuilder s = new StringBuilder();
         int N = size();

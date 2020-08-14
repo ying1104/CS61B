@@ -115,4 +115,10 @@ public class Word implements WorldState {
         result = 31 * result + (goal != null ? goal.hashCode() : 0);
         return result;
     }
+
+    public static void main(String [] args) {
+        String [] data = { "horse", "nurse", "hose", "nurse", "hole", "nurse" };
+        for (int i = 0; i < data.length; i += 2)
+            System.out.println("distance(" + data[i] + ", " + data[i+1] + ") = " + editDistance(data[i], data[i+1]));
+    }
 }
