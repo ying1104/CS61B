@@ -25,6 +25,8 @@ public class EightPuzzleSolver {
         // System.out.println("initial tiles is: " + initial.toString());
         Solver solver = new Solver(initial);
         StdOut.println("Minimum number of moves = " + solver.moves());
+        solver.solution();
+        solver.solution();
         for (WorldState ws : solver.solution()) {
             StdOut.println(ws);
         }

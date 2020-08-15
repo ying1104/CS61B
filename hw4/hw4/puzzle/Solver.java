@@ -60,8 +60,9 @@ public class Solver {
      */
     public Iterable<WorldState> solution() {
         solution = new Stack<>();
-        SearchNode current = pqOfNodes.min();
-        pqOfNodes.delMin();
+        Solver solverSolutions = new Solver(this.initial);
+        SearchNode current = solverSolutions.pqOfNodes.min();
+        solverSolutions.pqOfNodes.delMin();
         while (!current.worldState.isGoal()) {
             for (WorldState w : current.worldState.neighbors()) {
                 SearchNode toInsert =
@@ -71,19 +72,18 @@ public class Solver {
                         equals(toInsert.worldState)) {
                     continue;
                 } else {
-                    pqOfNodes.insert(toInsert);
+                    solverSolutions.pqOfNodes.insert(toInsert);
                 }
 
             }
 
-            current = pqOfNodes.min();
-            pqOfNodes.delMin();
+            current = solverSolutions.pqOfNodes.min();
+            solverSolutions.pqOfNodes.delMin();
         }
         while (current != null) {
             solution.push(current.worldState);
             current = current.preNode;
         }
-        System.out.println(solution.size());
         return solution;
     }
 
