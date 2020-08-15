@@ -122,6 +122,7 @@ public class Board implements WorldState {
      */
     @Override
     public boolean equals(Object y) {
+
         Board boardY = (Board) y;
         if (this.tileSize != boardY.tileSize) {
             return false;
@@ -134,6 +135,12 @@ public class Board implements WorldState {
             }
         }
         return true;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return 1;
     }
 
 

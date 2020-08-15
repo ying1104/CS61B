@@ -11,7 +11,7 @@ public class Solver {
     private Stack<WorldState> solution;
     private WorldState initial;
 
-    public class SearchNode implements Comparable<SearchNode> {
+    private class SearchNode implements Comparable<SearchNode> {
         private WorldState worldState;
         private int movesMade;
         private SearchNode preNode;

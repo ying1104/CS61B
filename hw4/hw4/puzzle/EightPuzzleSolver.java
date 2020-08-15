@@ -18,6 +18,8 @@ public class EightPuzzleSolver {
             }
         }
         Board initial = new Board(tiles);
+        Board initial2 = new Board(tiles);
+        System.out.println("equals or not: " + initial.equals(initial2));
         System.out.println("initial estimate dist to goal is: "
                 + initial.estimatedDistanceToGoal());
         // System.out.println("initial tiles is: " + initial.toString());
