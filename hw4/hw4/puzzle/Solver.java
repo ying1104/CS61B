@@ -9,6 +9,7 @@ public class Solver {
     public MinPQ<SearchNode> pqOfNodes = new MinPQ<>();
     public Stack<WorldState> solution;
     public int totalInsert;
+    public WorldState initial;
 
     public class SearchNode implements Comparable<SearchNode> {
         public WorldState worldState;
@@ -42,13 +43,15 @@ public class Solver {
     public Solver(WorldState initial) {
         pqOfNodes.insert(new SearchNode(initial, 0, null));
         totalInsert = 0;
+        this.initial = initial;
     }
 
     /** Returns the minimum number of moves to solve the
      * puzzle starting at the initial WorldState.
      */
     public int moves() {
-        Stack<WorldState> n = (Stack<WorldState>) this.solution();
+        Solver solverMoves = new Solver(this.initial);
+        Stack<WorldState> n = (Stack<WorldState>) solverMoves.solution();
         return n.size() - 1;
 
     }
@@ -62,7 +65,6 @@ public class Solver {
         pqOfNodes.delMin();
         while (!current.worldState.isGoal()) {
             for (WorldState w : current.worldState.neighbors()) {
-                boolean repeat = false;
                 SearchNode toInsert = new SearchNode(w, current.movesMade + 1, current);
 //                for (WorldState v : solution) {
 //                    if (w.equals(v)) {
@@ -71,21 +73,14 @@ public class Solver {
 //                }
                 if (toInsert.preNode.preNode != null
                 && toInsert.preNode.preNode.worldState.equals(toInsert.worldState)) {
-                    repeat = true;
+                    continue;
+                } else {
+                    pqOfNodes.insert(toInsert);
+                    totalInsert++;
                 }
-                if (repeat) continue;
-                pqOfNodes.insert(toInsert);
-                totalInsert++;
+
             }
 
-//            for (SearchNode s : pqOfNodes) {
-//                System.out.println(s.worldState);
-//                System.out.println("estimate to goal: " + s.worldState.estimatedDistanceToGoal() + "moveMade: " + s.movesMade);
-//            }
-//            System.out.println("Current: " + current.worldState);
-//            System.out.println();
-//
-//            System.out.println();
             current = pqOfNodes.min();
             pqOfNodes.delMin();
         }
@@ -93,6 +88,7 @@ public class Solver {
             solution.push(current.worldState);
             current = current.preNode;
         }
+        System.out.println(solution.size());
         return solution;
     }
 
