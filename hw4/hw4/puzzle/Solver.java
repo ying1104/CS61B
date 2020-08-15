@@ -1,23 +1,23 @@
 package hw4.puzzle;
 
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.MinPQ;
+import edu.princeton.cs.algs4.Stack;
 
 
 
 
 public class Solver {
-    public MinPQ<SearchNode> pqOfNodes = new MinPQ<>();
-    public Stack<WorldState> solution;
-    public int totalInsert;
-    public WorldState initial;
+    private MinPQ<SearchNode> pqOfNodes = new MinPQ<>();
+    private Stack<WorldState> solution;
+    private WorldState initial;
 
     public class SearchNode implements Comparable<SearchNode> {
-        public WorldState worldState;
-        public int movesMade;
-        public SearchNode preNode;
-        public int estimateMoveToGoal;
+        private WorldState worldState;
+        private int movesMade;
+        private SearchNode preNode;
+        private int estimateMoveToGoal;
 
-        public SearchNode(WorldState w, int m, SearchNode s) {
+        private SearchNode(WorldState w, int m, SearchNode s) {
             worldState = w;
             movesMade = m;
             preNode = s;
@@ -42,7 +42,6 @@ public class Solver {
      */
     public Solver(WorldState initial) {
         pqOfNodes.insert(new SearchNode(initial, 0, null));
-        totalInsert = 0;
         this.initial = initial;
     }
 
@@ -65,18 +64,14 @@ public class Solver {
         pqOfNodes.delMin();
         while (!current.worldState.isGoal()) {
             for (WorldState w : current.worldState.neighbors()) {
-                SearchNode toInsert = new SearchNode(w, current.movesMade + 1, current);
-//                for (WorldState v : solution) {
-//                    if (w.equals(v)) {
-//                        repeat = true;
-//                    }
-//                }
+                SearchNode toInsert =
+                        new SearchNode(w, current.movesMade + 1, current);
                 if (toInsert.preNode.preNode != null
-                && toInsert.preNode.preNode.worldState.equals(toInsert.worldState)) {
+                    && toInsert.preNode.preNode.worldState.
+                        equals(toInsert.worldState)) {
                     continue;
                 } else {
                     pqOfNodes.insert(toInsert);
-                    totalInsert++;
                 }
 
             }

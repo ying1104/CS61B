@@ -18,7 +18,8 @@ public class EightPuzzleSolver {
             }
         }
         Board initial = new Board(tiles);
-        System.out.println("initial estimate dist to goal is: " + initial.estimatedDistanceToGoal());
+        System.out.println("initial estimate dist to goal is: "
+                + initial.estimatedDistanceToGoal());
         // System.out.println("initial tiles is: " + initial.toString());
         Solver solver = new Solver(initial);
         StdOut.println("Minimum number of moves = " + solver.moves());

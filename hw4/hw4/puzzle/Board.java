@@ -1,15 +1,14 @@
 package hw4.puzzle;
 
 import edu.princeton.cs.algs4.Queue;
-import java.lang.*;
 
-public class Board implements WorldState{
+public class Board implements WorldState {
     private final int BLANK = 0;
-    public int[][] tiles;
-    public int[][] tilesCopy;
-    public int tileSize;
+    private int[][] tiles;
+    private int[][] tilesCopy;
+    private int tileSize;
 
-    /** Constructs a board from an N-by-N array of tiles where
+    /** Constructs a board from an N-by-N array of tiles where.
      * tiles[i][j] = tile at row i, column j。
      */
     public Board(int[][] tiles) {
@@ -28,14 +27,14 @@ public class Board implements WorldState{
     /** Returns value of tile at row i, column j (or 0 if blank). */
     public int tileAt(int i, int j) {
         if (i < 0 || i >= tileSize
-        || j < 0 || j >= tileSize) {
+            || j < 0 || j >= tileSize) {
             throw new IndexOutOfBoundsException();
         }
         return tiles[i][j];
     }
 
 
-    /** Returns the board size N */
+    /** Returns the board size N. */
     public int size() {
         return tileSize;
     }
@@ -121,6 +120,7 @@ public class Board implements WorldState{
     /** Returns true if this board's tile values are the same
      * position as y's.
      */
+    @Override
     public boolean equals(Object y) {
         Board boardY = (Board) y;
         if (this.tileSize != boardY.tileSize) {
@@ -145,7 +145,7 @@ public class Board implements WorldState{
         s.append(N + "\n");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                s.append(String.format("%2d ", tileAt(i,j)));
+                s.append(String.format("%2d ", tileAt(i, j)));
             }
             s.append("\n");
         }
