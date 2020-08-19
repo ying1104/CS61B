@@ -70,7 +70,7 @@ public class MergeSort {
             Queue<Item> items) {
         // Your code here!
         if (items.isEmpty()) {
-            return null;
+            return items;
         }
         Queue<Queue<Item>> s1 = MergeSort.makeSingleItemQueues(items);
         Queue<Queue<Item>> s2 = new Queue<>();
