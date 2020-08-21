@@ -1,5 +1,7 @@
 import edu.princeton.cs.algs4.Queue;
 
+import java.util.Comparator;
+
 public class QuickSort {
     /**
      * Returns a new queue that contains the given queues catenated together.
@@ -47,13 +49,52 @@ public class QuickSort {
     private static <Item extends Comparable> void partition(
             Queue<Item> unsorted, Item pivot,
             Queue<Item> less, Queue<Item> equal, Queue<Item> greater) {
+
+        for (Item i : unsorted) {
+            int result = i.compareTo(pivot);
+            if (result > 0) {
+                greater.enqueue(i);
+            } else if (result < 0 ) {
+                less.enqueue(i);
+            } else {
+                equal.enqueue(i);
+            }
+
+        }
         // Your code here!
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> quickSort(
             Queue<Item> items) {
-        // Your code here!
-        return items;
+        if (items.size() <= 1) {
+            return items;
+        }
+        Queue<Item> items2 = new Queue<>();
+        for (Item i : items) {
+            items2.enqueue(i);
+        }
+        Queue<Item> greater = new Queue<>();
+        Queue<Item> less = new Queue<>();
+        Queue<Item> equal = new Queue<>();
+        partition(items2, getRandomItem(items), less,equal, greater);
+        return catenate(catenate(quickSort(less), equal), quickSort(greater));
+
+    }
+
+    public static void main(String[] args) {
+        Queue<String> students = new Queue<>();
+        QuickSort.quickSort(students);
+        students.enqueue("Alice");
+        students.enqueue("Vanessa");
+        students.enqueue("Ying");
+        students.enqueue("Haixiao");
+        students.enqueue("Ethan");
+        System.out.println("Original quque is: " + students.toString());
+        Queue<String> result = QuickSort.quickSort(students);
+        System.out.println("Test if original queue changed: " + students.toString());
+        System.out.println("Result queue is: " + result.toString());
+        System.out.println("Expected queue is: Alice " +
+                "Ethan Haixiao Vanessa Ying");
     }
 }

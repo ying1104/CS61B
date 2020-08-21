@@ -35,9 +35,13 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
         Queue<Queue<Item>> result= new Queue<>();
-        while (!items.isEmpty()) {
+        Queue<Item> items2 = new Queue<>();
+        for (Item i : items) {
+            items2.enqueue(i);
+        }
+        while (!items2.isEmpty()) {
             Queue<Item> toInsert = new Queue<>();
-            toInsert.enqueue(items.dequeue());
+            toInsert.enqueue(items2.dequeue());
             result.enqueue(toInsert);
         }
         return result;
@@ -103,6 +107,7 @@ public class MergeSort {
         students.enqueue("Ethan");
         System.out.println("Original quque is: " + students.toString());
         Queue<String> result = MergeSort.mergeSort(students);
+        System.out.println("Test if original queue changed: " + students.toString());
         System.out.println("Result queue is: " + result.toString());
         System.out.println("Expected queue is: Alice " +
                 "Ethan Haixiao Vanessa Ying");
