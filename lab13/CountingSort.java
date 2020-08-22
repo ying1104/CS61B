@@ -74,6 +74,9 @@ public class CountingSort {
                 min = i;
             }
         }
+        if (min < -2000000) {
+            throw new java.lang.NegativeArraySizeException();
+        }
         int[] arrPositive = new int[arr.length];
         for (int i = 0; i < arr.length; i++) {
             arrPositive[i] = arr[i] - min;

@@ -16,6 +16,9 @@ public class RadixSort {
      * @return String[] the sorted array
      */
     public static String[] sort(String[] asciis) {
+        if (asciis.length == 0) {
+            return asciis;
+        }
         int stringMaxLen = 0;
         String[] asciis2 = new String[asciis.length];
         for (int i = 0; i < asciis.length; i++) {
