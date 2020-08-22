@@ -70,13 +70,14 @@ public class CountingSort {
         // find min.
         int min = Integer.MAX_VALUE;
         for (int i : arr) {
+            if (i < -2000000000) {
+                return arr;
+            }
             if (i < min) {
                 min = i;
             }
         }
-        if (min < -2000000) {
-            throw new java.lang.NegativeArraySizeException();
-        }
+
         int[] arrPositive = new int[arr.length];
         for (int i = 0; i < arr.length; i++) {
             arrPositive[i] = arr[i] - min;
