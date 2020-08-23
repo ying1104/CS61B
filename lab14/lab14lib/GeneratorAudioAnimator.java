@@ -5,6 +5,7 @@ import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.style.AxesChartStyler;
 
+
 import javax.swing.*;
 import java.util.LinkedList;
 import java.util.List;
